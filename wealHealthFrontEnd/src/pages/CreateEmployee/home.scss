@@ -1,0 +1,36 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+
+    &-container {
+        width: 100%;
+        align-content: center;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    input {
+        width: 50%;
+        align-self: self-start;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-top: 1rem;
+    }
+
+    &-button {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+
+
+        &_color {
+            margin: 2rem 0;
+            background-color: #708610;
+        }
+    }
+}

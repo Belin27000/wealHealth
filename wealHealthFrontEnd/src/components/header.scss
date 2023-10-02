@@ -1,3 +1,17 @@
 .Header {
-    background-color: red;
+
+    height: 5rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    img {
+        height: 100%;
+    }
+
+    p {
+        font-size: 2rem;
+    }
+
 }
