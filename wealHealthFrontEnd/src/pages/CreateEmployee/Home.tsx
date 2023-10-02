@@ -1,6 +1,13 @@
 import React from 'react';
 import './home.scss'
+import { Link } from 'react-router-dom';
+import Department from '../../assets/data/dropdownData.json'
+import Dropdown from 'react-dropdown'
+// import 'react-dropdown/style.css'
+
 const Home = () => {
+    console.log(Department);
+
     return (
         <div className='form'>
             <form className='form-container'>
@@ -20,13 +27,14 @@ const Home = () => {
                     <label htmlFor="start-date">Start Date</label>
                     <input id="start-date" type="text" />
                     <label htmlFor="department">Department</label>
-                    <select name="department" id="department">
+                    {/* <select name="department" id="department">
                         <option>Sales</option>
                         <option>Marketing</option>
                         <option>Engineering</option>
                         <option>Human Resources</option>
                         <option>Legal</option>
-                    </select>
+                    </select> */}
+                    <Dropdown options={Department.DEPARTMENT} />
                 </div>
 
                 <fieldset className="address">
@@ -48,7 +56,8 @@ const Home = () => {
 
             </form>
             <div className='form-button'>
-                <button className='form-button_color'>View Current Employees</button>
+                <Link className='form-button_color' to='/EmployeeList'>View Current Employees</Link>
+                {/* <button className='form-button_color'>View Current Employees</button> */}
                 <button className='form-button_color'>Save</button>
             </div>
         </div>
