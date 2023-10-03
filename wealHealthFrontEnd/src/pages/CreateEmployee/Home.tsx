@@ -3,7 +3,7 @@ import './home.scss'
 import { Link } from 'react-router-dom';
 import Department from '../../assets/data/dropdownData.json'
 import Dropdown from 'react-dropdown'
-// import 'react-dropdown/style.css'
+import 'react-dropdown/style.css'
 
 const Home = () => {
     console.log(Department);
@@ -27,13 +27,7 @@ const Home = () => {
                     <label htmlFor="start-date">Start Date</label>
                     <input id="start-date" type="text" />
                     <label htmlFor="department">Department</label>
-                    {/* <select name="department" id="department">
-                        <option>Sales</option>
-                        <option>Marketing</option>
-                        <option>Engineering</option>
-                        <option>Human Resources</option>
-                        <option>Legal</option>
-                    </select> */}
+
                     <Dropdown options={Department.DEPARTMENT} />
                 </div>
 
@@ -55,10 +49,8 @@ const Home = () => {
 
 
             </form>
+            <button className='form-button_color'>Save</button>
             <div className='form-button'>
-                <Link className='form-button_color' to='/EmployeeList'>View Current Employees</Link>
-                {/* <button className='form-button_color'>View Current Employees</button> */}
-                <button className='form-button_color'>Save</button>
             </div>
         </div>
     );
