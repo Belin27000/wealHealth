@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './home.scss'
-import { Link } from 'react-router-dom';
+
 import Department from '../../assets/data/dropdownData.json'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 
 const Home = () => {
     console.log(Department);
 
+    const [birthDate, setBirthDate] = useState(new Date())
+    const [startDate, setStartDate] = useState(new Date())
+
+    function onChangeBirthDateHandler(value: Date) {
+        setBirthDate(value)
+    }
+    function onChangeStartDateHandler(value: Date) {
+        setStartDate(value)
+    }
     return (
         <div className='form'>
             <form className='form-container'>
@@ -22,10 +33,10 @@ const Home = () => {
                     </div>
 
                     <label htmlFor="date-of-birth">Date of Birth</label>
-                    <input id="date-of-birth" type="text" />
+                    <DatePicker selected={birthDate} onChange={onChangeBirthDateHandler} dateFormat="dd/MM/yyyy" />
 
                     <label htmlFor="start-date">Start Date</label>
-                    <input id="start-date" type="text" />
+                    <DatePicker className="test" selected={startDate} onChange={onChangeStartDateHandler} dateFormat="dd/MM/yyyy" />
                     <label htmlFor="department">Department</label>
 
                     <Dropdown options={Department.DEPARTMENT} />
