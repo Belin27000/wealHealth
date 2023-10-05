@@ -7,8 +7,16 @@
     justify-content: space-between;
     margin-bottom: 5rem;
 
+    &-img-container {
+        height: 80px;
+        width: 80px;
+        overflow: hidden;
+    }
+
     img {
-        height: 100%;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
     }
 
     p {

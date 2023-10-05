@@ -33,12 +33,12 @@ const Home = () => {
                     </div>
 
                     <label htmlFor="date-of-birth">Date of Birth</label>
-                    <DatePicker selected={birthDate} onChange={onChangeBirthDateHandler} dateFormat="dd/MM/yyyy" />
+                    <DatePicker id="date-of-birth" selected={birthDate} onChange={onChangeBirthDateHandler} dateFormat="dd/MM/yyyy" />
 
                     <label htmlFor="start-date">Start Date</label>
-                    <DatePicker className="test" selected={startDate} onChange={onChangeStartDateHandler} dateFormat="dd/MM/yyyy" />
-                    <label htmlFor="department">Department</label>
+                    <DatePicker id="start-date" className="test" selected={startDate} onChange={onChangeStartDateHandler} dateFormat="dd/MM/yyyy" />
 
+                    <label htmlFor="department">Department</label>
                     <Dropdown options={Department.DEPARTMENT} />
                 </div>
 

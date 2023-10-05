@@ -4,4 +4,12 @@
     &-table {
         width: 100%;
     }
+
+    a {
+        color: white;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }

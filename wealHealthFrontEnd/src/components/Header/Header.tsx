@@ -6,7 +6,9 @@ import NavBar from '../NavBar/NavBar';
 const Header = () => {
     return (
         <div className='Header'>
-            <img src={Logo} alt='Wealth Health company' />
+            <div className='Header-img-container'>
+                <img src={Logo} alt='Wealth Health company' />
+            </div>
             <NavBar />
             <h1>HRnet</h1>
         </div>

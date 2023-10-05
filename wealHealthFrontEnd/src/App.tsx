@@ -1,29 +1,33 @@
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.scss'
-import Home from './pages/CreateEmployee/Home'
-import Layout from './Layout/Layout'
-import EmployeeList from './pages/EmployeeList/EmployeeList'
-// import { LocalizationProvider } from '@mui/lab'
+import { Suspense, lazy } from 'react'
+
+const Home = lazy(() => import('./pages/CreateEmployee/Home'))
+const Layout = lazy(() => import('./Layout/Layout'))
+const EmployeeList = lazy(() => import('./pages/EmployeeList/EmployeeList'))
 
 function App() {
 
   return (
     <div className='App'>
       <BrowserRouter>
-        <Routes>
+        <Suspense fallback={<h1>Loading...</h1>}>
 
-          <Route element={<Layout />} >
+          <Routes>
 
-            <Route index element={<Home />} />
+            <Route element={<Layout />} >
 
-            <Route path='/home' element={<Home />} />
-            <Route path='/employeeList' element={<EmployeeList />} />
+              <Route index element={<Home />} />
+
+              <Route path='/home' element={<Home />} />
+              <Route path='/employeeList' element={<EmployeeList />} />
 
 
-          </Route>
+            </Route>
 
-        </Routes>
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </div>
   )

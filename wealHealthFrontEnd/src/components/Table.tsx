@@ -1,54 +1,66 @@
-import React, { useMemo, useState } from 'react';
-import { useReactTable, flexRender, getCoreRowModel, Column } from '@tanstack/react-table'
+import { useMemo } from 'react';
+import { useReactTable, flexRender, getCoreRowModel, ColumnDef } from '@tanstack/react-table'
 import mData from '../assets/data/mockEmployeeData.json'
+// import { log } from 'console';
 
 
 
 
 
 const Table = () => {
+    interface EmployeeData {
+        FirstName: string;
+        LastName: string;
+        StartDate: Date;
+        Department: string;
+        DateOfBirth: Date;
+        Street: string;
+        city: string;
+        state: string;
+        zipeCode: string;
+    }
 
 
     const data = useMemo(() => mData, [])
     // type columns = import('@tanstack/react-table').ColumnDef<[]>
 
-    const columns: Column[] = useMemo(
+    const columns: ColumnDef<EmployeeData>[] = useMemo(
         () => [
             {
                 header: 'First name',
-                accessorykey: 'Firstname',
+                accessor: 'Firstname',
             },
             {
                 header: 'Last Name',
-                accessorykey: 'LastName',
+                accessor: 'LastName',
             },
             {
                 header: 'Start Date',
-                accessorykey: 'StartDate',
+                accessor: 'StartDate',
             },
             {
                 header: 'Department',
-                accessorykey: 'Department',
+                accessor: 'Department',
             },
             {
                 header: 'Date of Birth',
-                accessorykey: 'DateOfBirth',
+                accessor: 'DateOfBirth',
             },
             {
                 header: 'Street',
-                accessorykey: 'Street',
+                accessor: 'Street',
             },
             {
                 header: 'city',
-                accessorykey: 'city',
+                accessor: 'city',
             },
             {
                 header: 'state',
-                accessorykey: 'state',
+                accessor: 'state',
             },
             {
                 header: 'zip code',
-                accessorykey: 'zipeCode',
+                accessor: 'zipeCode',
             }
 
         ],
@@ -59,7 +71,7 @@ const Table = () => {
         columns,
         getCoreRowModel: getCoreRowModel(),
     })
-    console.log(table);
+    console.log(table.getRowModel().rows);
 
     return (
         <div className='Table' >
@@ -81,12 +93,17 @@ const Table = () => {
 
                 <tbody>
                     {table.getRowModel().rows.map(row => (
+
                         <tr key={row.id}>
-                            {row.getVisibleCells().map(cell => (
-                                <td key={cell.id}>
-                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                </td>
-                            ))}
+                            {row.original && (
+                                Object.keys(row.original).map(key => (
+                                    <td key={key}>
+                                        {row.original[key] as string}
+                                    </td>
+                                ))
+                            )
+
+                            }
                         </tr>
                     ))}
                 </tbody>
