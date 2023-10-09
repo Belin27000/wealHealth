@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/react-table": "^8.10.3",
+    "@tanstack/react-table": "^8.10.6",
+    "firebase": "^10.4.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-datepicker": "^4.18.0",

@@ -1,4 +1,4 @@
-import Table from '../../components/Table';
+import Table from '../../components/Table/Table';
 import './employeeList.scss'
 import { Link } from 'react-router-dom';
 const EmployeeList = () => {

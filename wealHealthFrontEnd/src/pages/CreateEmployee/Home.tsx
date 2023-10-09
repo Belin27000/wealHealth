@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './home.scss'
 
 import Department from '../../assets/data/dropdownData.json'
@@ -8,7 +8,7 @@ import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 
 const Home = () => {
-    console.log(Department);
+    // console.log(Department);
 
     const [birthDate, setBirthDate] = useState(new Date())
     const [startDate, setStartDate] = useState(new Date())
