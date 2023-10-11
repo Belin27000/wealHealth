@@ -8,6 +8,7 @@ import { flexRender, useReactTable, getCoreRowModel } from '@tanstack/react-tabl
 import './table.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmployees } from '../../Store/EmployeeSlice'
+import { RootState } from '../../Store/Index';
 // import { log } from 'console';
 // import { useReactTable } from "@tanstack/react-table"
 
@@ -19,11 +20,13 @@ interface TableProps {
 
 const Table: React.FC<TableProps> = (employees) => {
     // console.log(employeeCollectionRef);
-    console.log(employees);
+    // console.log(employees);
 
     const dispatch = useDispatch()
-    const employee = useSelector((state) => state.employees);
-    // const [employee, setEmployee] = useState([])
+
+    const employee = useSelector((state: RootState) => state.employees);
+
+    // const [employee, setEmployees] = useState([])
 
     useEffect(() => {
         const employeeCollectionRef = collection(db, "Employees")
@@ -42,9 +45,11 @@ const Table: React.FC<TableProps> = (employees) => {
         getEmployeeList()
     }, [dispatch])
 
-    // console.log({ employee });
+
 
     const finalData = useMemo(() => employee, [])
+
+
     const finalColumnDef = useMemo(() => columnDef, [])
     // console.log({ finalData });
 
@@ -54,6 +59,8 @@ const Table: React.FC<TableProps> = (employees) => {
         data: finalData,
         getCoreRowModel: getCoreRowModel(),
     });
+
+    // console.log(employee[0]);
 
     // console.log(table);
 
