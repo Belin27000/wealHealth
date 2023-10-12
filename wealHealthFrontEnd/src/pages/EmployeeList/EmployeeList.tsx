@@ -1,47 +1,42 @@
+// import { useSelector } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from '../../components/Table/Table';
 import './employeeList.scss'
 import { Link } from 'react-router-dom';
-// import { RootState } from '../../Store/Index'
-import { useEffect, useState } from 'react';
-import { db } from '../../config/firebase';
-import { getDocs, collection } from 'firebase/firestore'
+import { useEffect } from 'react';
+import { fetchEmployees } from '../../Store/EmployeeSlice';
+
 
 
 
 const EmployeeList = () => {
 
-    // const dispatch = useDispatch()
-    const [employee, setEmployee] = useState([])
-    // const employees = useSelector((state: RootState) => state.employees)
-    const employeeCollectionRef = collection(db, "Employees")
+    const dispatch = useDispatch()
+    const employees = useSelector((state) => state.employees.EmployeeList)
+
+    const fetchData = async () => {
+
+        await dispatch(fetchEmployees());
+    }
+
 
     useEffect(() => {
-        const getEmployeeList = async () => {
-            try {
-                const data = await getDocs(employeeCollectionRef)
-                const fiteredData = data.docs.map((doc) => ({ ...doc.data() }))
-                console.log(fiteredData);
-                setEmployee(fiteredData)
 
-            } catch (err) {
-                console.error(err);
-            }
-        };
-        getEmployeeList()
-    }, [])
-    // console.log(employeeCollectionRef);
+        fetchData()
+    }, [dispatch])
 
-    if (!employee) {
-        return <div>Loading...</div>
-    }
+    // console.log(fetchEmployees());
+
+    // console.log('EmployeeList Fetch', employees);
+
+
     return (
 
 
-        <div className='EmployeeList'>
-            <Table employees={employee} />
+        <div className='EmployeeList' >
+            <Table employees={employees} />
             <Link to='/Home'>Home</Link>
-        </div>
+        </div >
     );
 };
 

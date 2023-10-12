@@ -1,57 +1,40 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo } from 'react';
-// import mData from '../assets/data/mockEmployeeData.json'
-import { db } from '../../config/firebase'
-import { getDocs, collection } from 'firebase/firestore'
+import { useEffect, useMemo, useState } from 'react';
+
 import { columnDef } from './columns';
 import { flexRender, useReactTable, getCoreRowModel } from '@tanstack/react-table';
 import './table.scss'
-import { useDispatch, useSelector } from 'react-redux';
-import { setEmployees } from '../../Store/EmployeeSlice'
-import { RootState } from '../../Store/Index';
-// import { log } from 'console';
-// import { useReactTable } from "@tanstack/react-table"
+import { Employee } from '../../type/employee'
 
 
-interface TableProps {
-    employees: any[]; // Définissez le type des employés
-}
+
+const Table = ({ employees }: { employees: Employee[] }) => {
 
 
-const Table: React.FC<TableProps> = (employees) => {
-    // console.log(employeeCollectionRef);
-    // console.log(employees);
+    // console.log(employees.docs);
 
-    const dispatch = useDispatch()
-
-    const employee = useSelector((state: RootState) => state.employees);
-
-    // const [employee, setEmployees] = useState([])
+    const [employeesList, setEmployeesList] = useState([])
 
     useEffect(() => {
-        const employeeCollectionRef = collection(db, "Employees")
+        if (employees && employees.docs) {
 
-        const getEmployeeList = async () => {
-            //Read the data from our database
             try {
-                const data = await getDocs(employeeCollectionRef)
-                const filteredData: { id: string; }[] = data.docs.map((doc) => ({ ...doc.data(), id: doc.id, }))
-                // console.log(filteredData);
-                dispatch(setEmployees(filteredData))
-            } catch (err) {
-                console.error(err);
+                const filteredData: { id: string; }[] = employees.docs.map((doc) => ({ ...doc.data(), id: doc.id, }))
+                console.log(filteredData);
+                setEmployeesList(filteredData)
+            } catch (error) {
+                console.error('Erreur dans le composant Table :', error);
             }
         }
-        getEmployeeList()
-    }, [dispatch])
+    }, [employees])
 
 
 
-    const finalData = useMemo(() => employee, [])
+    // const finalData = employeesList
+    const finalData = useMemo(() => employeesList, [employeesList])
 
 
     const finalColumnDef = useMemo(() => columnDef, [])
-    // console.log({ finalData });
 
 
     const table = useReactTable({
@@ -60,9 +43,6 @@ const Table: React.FC<TableProps> = (employees) => {
         getCoreRowModel: getCoreRowModel(),
     });
 
-    // console.log(employee[0]);
-
-    // console.log(table);
 
 
     return (

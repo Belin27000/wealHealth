@@ -5,15 +5,20 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
-import { db } from '../../config/firebase';
-import { getDocs, collection } from 'firebase/firestore'
+// import { db } from '../../config/firebase';
+// import { getDocs, collection } from 'firebase/firestore'
+import { useDispatch } from 'react-redux';
 
+import data from '../../assets/data/data_service'
 
 
 const Home = () => {
 
-    const departmentCollectionRef = collection(db, "Department")
-    const StateCollectionRef = collection(db, "States")
+    const dispatch = useDispatch()
+    // const departmentCollectionRef = collection(db, "Department")
+    const departmentCollectionRef = data.getDepartment()
+    // const StateCollectionRef = collection(db, "States")
+    const StateCollectionRef = data.getStates()
 
     const [departmentList, setDepartmentList] = useState([])
     const [stateList, setStateList] = useState([])
@@ -21,7 +26,7 @@ const Home = () => {
     useEffect(() => {
         const getDeptList = async () => {
             try {
-                const Depdata = await getDocs(departmentCollectionRef)
+                const Depdata = await departmentCollectionRef
                 const fiteredDataDep = Depdata.docs.map((doc) => ({ ...doc.data() }))
                 setDepartmentList(fiteredDataDep)
 
@@ -31,7 +36,7 @@ const Home = () => {
         };
         const getStateList = async () => {
             try {
-                const StatesData = await getDocs(StateCollectionRef)
+                const StatesData = await StateCollectionRef
                 // console.log(StatesData.docs[0]);
                 const fiteredDataStates = StatesData.docs.map((doc) => ({ ...doc.data() }))
                 // console.log(fiteredDataStates);
@@ -42,28 +47,13 @@ const Home = () => {
         };
         getDeptList();
         getStateList()
-    }, [])
+    }, [dispatch])
 
     const departmentValues = departmentList.map((item) => Object.values(item))[0];
     const statesValues = stateList.map((item) => Object.values(item))[0];
     console.log(stateList);
 
 
-
-
-
-    // statesValues.sort((a, b) => (a as string).localeCompare(b as string));
-    // const getSortStates = async () => {
-    //     try {
-    //         const sortStates = await statesValues.sort((a, b) => (a as string).localeCompare(b as string));
-    //     } catch (err) { 
-    //         console.error(err);
-
-    //     }
-
-    // }
-    // getSortStates()
-    // // console.log(sortStates);
 
 
     const [firstName, setFirstName] = useState('')
@@ -84,6 +74,40 @@ const Home = () => {
     function onChangeStartDateHandler(value: Date) {
         setStartDate(value)
     }
+
+    function handleSaveEmployee() {
+        const newEmployee = {
+            FirstName: firstName,
+            LastName: lastName,
+            dateOfBirth: birthDate.toDateString(),
+            startDate: startDate.toDateString(),
+            department: department,
+            street: street,
+            city: city,
+            State: State,
+            zipCode: zipCode,
+        };
+
+        // Ajoutez le nouvel employé à Firebase
+        data
+            .addEmployees(newEmployee)
+            .then(() => {
+                // Réinitialisez les champs du formulaire après l'ajout
+                setFirstName('');
+                setLastName('');
+                setBirthDate(new Date());
+                setStartDate(new Date());
+                setDepartment('');
+                setStreet('');
+                setCity('');
+                setState('');
+                setZipCode('');
+            })
+            .catch((error) => {
+                console.error('Erreur lors de l\'ajout de l\'employé :', error);
+            });
+    }
+
     return (
         <div className='form'>
             <form className='form-container'>
@@ -127,7 +151,7 @@ const Home = () => {
 
 
             </form>
-            <button className='form-button_color'>Save</button>
+            <button className='form-button_color' onClick={handleSaveEmployee}>Save</button>
             <div className='form-button'>
             </div>
         </div>
