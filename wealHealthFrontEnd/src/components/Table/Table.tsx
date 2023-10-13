@@ -2,9 +2,10 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { columnDef } from './columns';
-import { flexRender, useReactTable, getCoreRowModel } from '@tanstack/react-table';
+import { flexRender, useReactTable, getCoreRowModel, getSortedRowModel } from '@tanstack/react-table';
 import './table.scss'
 import { Employee } from '../../type/employee'
+import { FaArrowAltCircleUp, FaArrowCircleDown } from 'react-icons/fa'
 
 
 
@@ -14,6 +15,9 @@ const Table = ({ employees }: { employees: Employee[] }) => {
     // console.log(employees.docs);
 
     const [employeesList, setEmployeesList] = useState([])
+    const [sorting, setSorting] = useState([])
+
+
 
     useEffect(() => {
         if (employees && employees.docs) {
@@ -41,6 +45,11 @@ const Table = ({ employees }: { employees: Employee[] }) => {
         columns: finalColumnDef,
         data: finalData,
         getCoreRowModel: getCoreRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        state: {
+            sorting: sorting,
+        },
+        onSortingChange: setSorting,
     });
 
 
@@ -53,11 +62,16 @@ const Table = ({ employees }: { employees: Employee[] }) => {
                     return <tr key={headerEl.id}>
                         {headerEl.headers.map((columnEl) => {
                             return (
-                                <th key={columnEl.id}>
+                                <th key={columnEl.id} onClick={columnEl.column.getToggleSortingHandler()}>
                                     {flexRender(
                                         columnEl.column.columnDef.header,
                                         columnEl.getContext()
                                     )}
+                                    {
+                                        { asc: <FaArrowAltCircleUp />, desc: <FaArrowCircleDown /> }[
+                                        columnEl.column.getIsSorted() ?? null
+                                        ]
+                                    }
                                 </th>
                             )
                         })}

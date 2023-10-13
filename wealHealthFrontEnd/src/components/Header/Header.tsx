@@ -7,7 +7,7 @@ const Header = () => {
     return (
         <div className='Header'>
             <div className='Header-img-container'>
-                <img src={Logo} alt='Wealth Health company' />
+                <img src={Logo} width='300' height='276' alt='Wealth Health company' />
             </div>
             <NavBar />
             <h1>HRnet</h1>
