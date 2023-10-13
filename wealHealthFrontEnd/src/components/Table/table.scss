@@ -13,12 +13,21 @@
             width: 12%
         }
 
-        // svg {
-        //     margin-left: 1rem;
-        // }
+
     }
 
     tbody tr td {
         border-bottom: solid 1px white;
+    }
+}
+
+.pageManagment {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+
+    button {
+        margin: 1rem
     }
 }
