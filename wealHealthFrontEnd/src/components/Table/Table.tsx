@@ -100,7 +100,7 @@ const Table = ({ employees }: { employees: Employee[] }) => {
                 <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
                     {"<<"}
                 </button>
-                <div>Page {table.options.state.pagination?.pageIndex + 1} on {table.getPageCount()} </div>
+                <div>Page {table.options.state.pagination?.pageIndex !== undefined ? table.options.state.pagination.pageIndex + 1 : 'N?A'} on {table.getPageCount()} </div>
                 <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
                     {">>"}
                 </button>
