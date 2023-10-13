@@ -2,10 +2,11 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { columnDef } from './columns';
-import { flexRender, useReactTable, getCoreRowModel, getSortedRowModel, getPaginationRowModel } from '@tanstack/react-table';
+import { flexRender, useReactTable, getCoreRowModel, getSortedRowModel, getPaginationRowModel, SortingState } from '@tanstack/react-table';
 import './table.scss'
 import { Employee } from '../../type/employee'
 import { FaArrowAltCircleUp, FaArrowCircleDown } from 'react-icons/fa'
+
 
 
 
@@ -14,17 +15,16 @@ const Table = ({ employees }: { employees: Employee[] }) => {
 
     // console.log(employees.docs);
 
-    const [employeesList, setEmployeesList] = useState([])
-    const [sorting, setSorting] = useState([])
+    const [employeesList, setEmployeesList] = useState<{ id: string; }[]>([])
+    const [sorting, setSorting] = useState<SortingState>([])
 
 
 
     useEffect(() => {
-        if (employees && employees.docs) {
+        if (employees) {
 
             try {
-                const filteredData: { id: string; }[] = employees.docs.map((doc) => ({ ...doc.data(), id: doc.id, }))
-                console.log(filteredData);
+                const filteredData: { id: string; }[] = employees.docs.map((doc: []) => ({ ...doc.data(), id: doc.id, }))
                 setEmployeesList(filteredData)
             } catch (error) {
                 console.error('Erreur dans le composant Table :', error);
@@ -57,6 +57,16 @@ const Table = ({ employees }: { employees: Employee[] }) => {
 
     return (
         <>
+            <div className='numberRow'>
+                <select value={table.options.state.pagination?.pageSize}
+                    onChange={(e) => table.setPageSize(parseInt(e.target.value, 10))}>
+                    {[1, 5, 10].map(pageSizeEl => {
+                        return [<option key={pageSizeEl} value={pageSizeEl}>
+                            {"number of row : "} {pageSizeEl}
+                        </option>]
+                    })}
+                </select>
+            </div>
             <table className='Table' >
                 <thead>
                     {table.getHeaderGroups().map(headerEl => {
@@ -69,11 +79,16 @@ const Table = ({ employees }: { employees: Employee[] }) => {
                                             columnEl.column.columnDef.header,
                                             columnEl.getContext()
                                         )}
-                                        {
-                                            { asc: <FaArrowAltCircleUp />, desc: <FaArrowCircleDown /> }[
-                                            columnEl.column.getIsSorted() ?? null
-                                            ]
-                                        }
+                                        {(() => {
+                                            const sortState = columnEl.column.getIsSorted();
+                                            if (sortState === 'asc') {
+                                                return <FaArrowAltCircleUp />;
+                                            } else if (sortState === 'desc') {
+                                                return <FaArrowCircleDown />;
+                                            } else {
+                                                return null;
+                                            }
+                                        })()}
                                     </th>
                                 )
                             })}
@@ -104,7 +119,7 @@ const Table = ({ employees }: { employees: Employee[] }) => {
                 <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
                     {">>"}
                 </button>
-                <button onClick={() => table.getPageCount() - 1} disabled={!table.getCanNextPage()}>
+                <button onClick={() => table.setPageIndex(table.getPageCount() - 1)} disabled={!table.getCanNextPage()}>
                     Last Page
                 </button>
             </div>
