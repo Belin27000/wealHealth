@@ -1,4 +1,3 @@
-import React from 'react';
 import './header.scss'
 import Logo from '../../assets/wealHealthLogo.jpeg'
 import NavBar from '../NavBar/NavBar';

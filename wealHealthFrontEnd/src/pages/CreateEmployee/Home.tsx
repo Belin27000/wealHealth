@@ -5,11 +5,10 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
-// import { db } from '../../config/firebase';
-// import { getDocs, collection } from 'firebase/firestore'
 import { useDispatch } from 'react-redux';
 
 import data from '../../assets/data/data_service'
+import Modal from '../../components/Modale/Modal';
 
 
 const Home = () => {
@@ -22,6 +21,13 @@ const Home = () => {
 
     const [departmentList, setDepartmentList] = useState([])
     const [stateList, setStateList] = useState([])
+    const [showModal, setShowModal] = useState(false);
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        window.location.reload(); // Actualiser la page
+    };
+
 
     useEffect(() => {
         const getDeptList = async () => {
@@ -51,20 +57,20 @@ const Home = () => {
 
     const departmentValues = departmentList.map((item) => Object.values(item))[0];
     const statesValues = stateList.map((item) => Object.values(item))[0];
-    console.log(stateList);
+    // console.log(stateList);
 
 
 
 
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
+    const [firstName, setFirstName] = useState('Yann')
+    const [lastName, setLastName] = useState('LECERF')
     const [birthDate, setBirthDate] = useState(new Date())
     const [startDate, setStartDate] = useState(new Date())
-    const [department, setDepartment] = useState('')
-    const [street, setStreet] = useState('')
-    const [city, setCity] = useState('')
-    const [State, setState] = useState('')
-    const [zipCode, setZipCode] = useState('')
+    const [department, setDepartment] = useState('Engineering')
+    const [street, setStreet] = useState('Nemours')
+    const [city, setCity] = useState('La genevraye')
+    const [State, setState] = useState('Florida')
+    const [zipCode, setZipCode] = useState('77690')
 
     // // console.log(department);
 
@@ -102,14 +108,21 @@ const Home = () => {
                 setCity('');
                 setState('');
                 setZipCode('');
+                setShowModal(true);
+
             })
             .catch((error) => {
                 console.error('Erreur lors de l\'ajout de l\'employé :', error);
             });
+
+
     }
+
+
 
     return (
         <div className='form'>
+            {/* <Modal text="Vas-y coco" imgPath="" /> */}
             <form className='form-container'>
                 <div className='form-identity'>
                     <div className='form-identity-name'>
@@ -150,10 +163,10 @@ const Home = () => {
                 </fieldset>
 
 
+                {/* <Modal text="Vas-y coco" imgPath="" /> */}
+                <Modal isActive={showModal} text="Employee registered" imgPath='' onClose={handleCloseModal} />
             </form>
             <button className='form-button_color' onClick={handleSaveEmployee}>Save</button>
-            <div className='form-button'>
-            </div>
         </div>
     );
 };

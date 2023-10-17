@@ -1,0 +1,42 @@
+.ModalOpen {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    opacity: .8;
+    color: black;
+    display: flex;
+    position: absolute;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+
+    .Message {
+
+        font-size: 5rem;
+        font-weight: bold;
+    }
+}
+
+.CloseModal {
+    position: absolute;
+    background-color: #88A513;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    right: 1.5rem;
+    top: 1.5rem;
+    // right: 0;
+    // top: 0;
+
+}
+
+.ModalClose {
+    display: none;
+}
