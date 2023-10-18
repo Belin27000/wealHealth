@@ -26,7 +26,6 @@ const Modal = ({ isActive, text, imgPath, onClose }: ModalProps) => {
         const handleEscapeKey = (e: KeyboardEvent) => {
             if (e.key === 'Escape' && isModalOpen) {
                 setIsModalOpen(false)
-                console.log('on est là');
                 onClose();
             }
         };

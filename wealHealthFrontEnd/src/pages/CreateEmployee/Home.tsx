@@ -8,8 +8,9 @@ import 'react-dropdown/style.css'
 import { useDispatch } from 'react-redux';
 
 import data from '../../assets/data/data_service'
-import Modal from '../../components/Modale/Modal';
-
+import FullScreenModal from 'fullscreenreact-modal'
+// import Modal from '../../components/Modale/Modal';
+import testImg from '../../assets/wealHealthLogo.jpeg'
 
 const Home = () => {
 
@@ -161,10 +162,10 @@ const Home = () => {
                     <label htmlFor="zip-code">Zip Code</label>
                     <input id="zip-code" value={zipCode} type="number" onChange={(e) => setZipCode(e.target.value)} />
                 </fieldset>
-
+                <FullScreenModal isActive={showModal} text="Employee registered" imgPath='' onClose={handleCloseModal} />
 
                 {/* <Modal text="Vas-y coco" imgPath="" /> */}
-                <Modal isActive={showModal} text="Employee registered" imgPath='' onClose={handleCloseModal} />
+                {/* <Modal isActive={showModal} text="Employee registered" imgPath={testImg} onClose={handleCloseModal} /> */}
             </form>
             <button className='form-button_color' onClick={handleSaveEmployee}>Save</button>
         </div>
