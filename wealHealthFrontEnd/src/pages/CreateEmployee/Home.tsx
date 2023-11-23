@@ -6,11 +6,9 @@ import 'react-datepicker/dist/react-datepicker.css'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 import { useDispatch } from 'react-redux';
-
 import data from '../../assets/data/data_service'
 import FullScreenModal from 'fullscreenreact-modal'
-// import Modal from '../../components/Modale/Modal';
-import testImg from '../../assets/wealHealthLogo.jpeg'
+
 
 const Home = () => {
 
@@ -31,6 +29,7 @@ const Home = () => {
 
 
     useEffect(() => {
+
         const getDeptList = async () => {
             try {
                 const Depdata = await departmentCollectionRef
@@ -54,6 +53,7 @@ const Home = () => {
         };
         getDeptList();
         getStateList()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch])
 
     const departmentValues = departmentList.map((item) => Object.values(item))[0];
@@ -84,14 +84,14 @@ const Home = () => {
 
     function handleSaveEmployee() {
         const newEmployee = {
-            FirstName: firstName,
-            LastName: lastName,
+            firstName: firstName,
+            lastName: lastName,
             dateOfBirth: birthDate.toDateString(),
             startDate: startDate.toDateString(),
             department: department,
             street: street,
             city: city,
-            State: State,
+            state: State,
             zipCode: zipCode,
         };
 

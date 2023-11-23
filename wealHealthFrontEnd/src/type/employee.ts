@@ -7,5 +7,6 @@ export interface Employee {
     startDate: string,
     street: string,
     zipCode: string,
+    id: string,
 
 }

@@ -24,7 +24,11 @@ const Table = ({ employees }: { employees: Employee[] }) => {
         if (employees) {
 
             try {
-                const filteredData: { id: string; }[] = employees.docs.map((doc: []) => ({ ...doc.data(), id: doc.id, }))
+                const filteredData: { id: string; }[] = employees.map((employee: Employee) => ({
+                    ...employee,
+                    id: employee.id,
+                }));
+                // const filteredData: { id: string; }[] = employees.docs.map((doc: []) => ({ ...doc.data(), id: doc.id, }))
                 setEmployeesList(filteredData)
             } catch (error) {
                 console.error('Erreur dans le composant Table :', error);

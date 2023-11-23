@@ -1,4 +1,3 @@
-import React from 'react';
 
 import { FaPlusCircle, FaThList } from 'react-icons/fa'
 import { Link } from 'react-router-dom';
